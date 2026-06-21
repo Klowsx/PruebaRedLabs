@@ -2,6 +2,7 @@ using System.Text;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.IdentityModel.Tokens;
+using ProductManager.Api.Middlewares;
 using ProductManager.Domain.Interfaces;
 using ProductManager.Infrastructure.Data;
 using ProductManager.Infrastructure.Identity;
@@ -48,6 +49,8 @@ builder.Services.AddCors(options =>
 });
 
 var app = builder.Build();
+
+app.UseMiddleware<GlobalExceptionMiddleware>();
 
 using (var scope = app.Services.CreateScope())
 {

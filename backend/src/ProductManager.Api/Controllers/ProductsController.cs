@@ -65,9 +65,7 @@ public class ProductsController : ControllerBase
     [HttpPost]
     public async Task<IActionResult> Create(CreateProductRequest request)
     {
-        var userId = User.FindFirst(System.Security.Claims.ClaimTypes.NameIdentifier)?.Value
-            ?? User.FindFirst("sub")?.Value
-            ?? "Sistema";
+        var userId = User.FindFirst("sub")?.Value ?? "Sistema";
 
         var producto = new Product
         {
@@ -100,9 +98,7 @@ public class ProductsController : ControllerBase
             return NotFound();
         }
 
-        var userId = User.FindFirst(System.Security.Claims.ClaimTypes.NameIdentifier)?.Value
-            ?? User.FindFirst("sub")?.Value
-            ?? "Sistema";
+        var userId = User.FindFirst("sub")?.Value ?? "Sistema";
 
         producto.Nombre = request.Nombre;
         producto.Descripcion = request.Descripcion;
