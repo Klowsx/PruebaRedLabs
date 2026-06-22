@@ -21,31 +21,25 @@ public class ProductsController : ControllerBase
     }
 
     [HttpGet]
-    public async Task<IActionResult> GetAll(
-        [FromQuery] string? nombre,
-        [FromQuery] bool? estado,
-        [FromQuery] decimal? minPrecio,
-        [FromQuery] decimal? maxPrecio,
-        [FromQuery] int pageNumber = 1,
-        [FromQuery] int pageSize = 10)
+    public async Task<IActionResult> GetAll([FromQuery] ProductFilterRequest request)
     {
-        var productos = await _repository.GetFilteredAsync(nombre, estado, minPrecio, maxPrecio);
+        var (productos, total) = await _repository.GetFilteredPagedAsync(
+            request.Nombre,
+            request.Estado,
+            request.MinPrecio,
+            request.MaxPrecio,
+            request.PageNumber,
+            request.PageSize);
 
-        var total = productos.Count();
-        var paginados = productos
-            .Skip((pageNumber - 1) * pageSize)
-            .Take(pageSize)
-            .ToList();
-
-        var dtos = paginados.Select(MapToDto);
+        var dtos = productos.Select(MapToDto);
 
         return Ok(new
         {
             Data = dtos,
             Total = total,
-            PageNumber = pageNumber,
-            PageSize = pageSize,
-            TotalPages = (int)Math.Ceiling(total / (double)pageSize)
+            PageNumber = request.PageNumber,
+            PageSize = request.PageSize,
+            TotalPages = (int)Math.Ceiling(total / (double)request.PageSize)
         });
     }
 

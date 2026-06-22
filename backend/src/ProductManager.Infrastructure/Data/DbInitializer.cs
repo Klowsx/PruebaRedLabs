@@ -19,7 +19,7 @@ public static class DbInitializer
             return;
         }
 
-        var userId = "seed-system";
+        var userId = "Sistema";
         var now = DateTime.UtcNow;
 
         var products = new List<Product>

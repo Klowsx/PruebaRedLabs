@@ -89,7 +89,7 @@ export default function AuthForm({ mode, onSubmit, loading, error }: AuthFormPro
       <button
         type="submit"
         disabled={loading}
-        className="w-full rounded-md bg-blue-600 px-4 py-2 text-sm font-medium text-white hover:bg-blue-700 disabled:bg-blue-300"
+        className="w-full cursor-pointer rounded-md bg-blue-600 px-4 py-2 text-sm font-medium text-white hover:bg-blue-700 disabled:bg-blue-300"
       >
         {loading ? "Cargando..." : isRegister ? "Registrarse" : "Iniciar sesión"}
       </button>

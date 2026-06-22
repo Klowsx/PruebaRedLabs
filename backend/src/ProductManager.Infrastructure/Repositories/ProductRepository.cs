@@ -35,6 +35,40 @@ public class ProductRepository : IProductRepository
         decimal? minPrecio,
         decimal? maxPrecio)
     {
+        var query = ApplyFilters(nombre, estado, minPrecio, maxPrecio);
+
+        return await query
+            .OrderByDescending(prod => prod.FechaCreacion)
+            .ToListAsync();
+    }
+
+    public async Task<(IEnumerable<Product> Items, int TotalCount)> GetFilteredPagedAsync(
+        string? nombre,
+        bool? estado,
+        decimal? minPrecio,
+        decimal? maxPrecio,
+        int pageNumber,
+        int pageSize)
+    {
+        var query = ApplyFilters(nombre, estado, minPrecio, maxPrecio);
+
+        var totalCount = await query.CountAsync();
+
+        var items = await query
+            .OrderByDescending(prod => prod.FechaCreacion)
+            .Skip((pageNumber - 1) * pageSize)
+            .Take(pageSize)
+            .ToListAsync();
+
+        return (items, totalCount);
+    }
+
+    private IQueryable<Product> ApplyFilters(
+        string? nombre,
+        bool? estado,
+        decimal? minPrecio,
+        decimal? maxPrecio)
+    {
         var query = _context.Products.AsNoTracking().AsQueryable();
 
         if (!string.IsNullOrWhiteSpace(nombre))
@@ -57,9 +91,7 @@ public class ProductRepository : IProductRepository
             query = query.Where(prod => prod.Precio <= maxPrecio.Value);
         }
 
-        return await query
-            .OrderByDescending(prod => prod.FechaCreacion)
-            .ToListAsync();
+        return query;
     }
 
     public async Task<Product> CreateAsync(Product producto)

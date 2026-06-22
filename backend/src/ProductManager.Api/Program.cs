@@ -7,6 +7,9 @@ using ProductManager.Domain.Interfaces;
 using ProductManager.Infrastructure.Data;
 using ProductManager.Infrastructure.Identity;
 using ProductManager.Infrastructure.Repositories;
+using QuestPDF.Infrastructure;
+
+QuestPDF.Settings.License = LicenseType.Community;
 
 var builder = WebApplication.CreateBuilder(args);
 

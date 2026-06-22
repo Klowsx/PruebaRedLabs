@@ -11,6 +11,15 @@ public interface IProductRepository
         bool? estado,
         decimal? minPrecio,
         decimal? maxPrecio);
+
+    Task<(IEnumerable<Product> Items, int TotalCount)> GetFilteredPagedAsync(
+        string? nombre,
+        bool? estado,
+        decimal? minPrecio,
+        decimal? maxPrecio,
+        int pageNumber,
+        int pageSize);
+
     Task<Product> CreateAsync(Product producto);
     Task<Product> UpdateAsync(Product producto);
     Task DeleteAsync(Product producto);
