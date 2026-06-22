@@ -29,7 +29,7 @@ export type UpdateProductRequest = CreateProductRequest;
 
 export interface ProductFilters {
   nombre?: string;
-  estado?: string;
+  estado?: boolean | null;
   minPrecio?: string;
   maxPrecio?: string;
   pageNumber?: number;

@@ -44,8 +44,14 @@ export default function ProductFilter({ filters, onChange }: ProductFilterProps)
           </label>
           <select
             id="estado"
-            value={localFilters.estado ?? ""}
-            onChange={(e) => setLocalFilters({ ...localFilters, estado: e.target.value || undefined })}
+            value={localFilters.estado === true ? "true" : localFilters.estado === false ? "false" : ""}
+            onChange={(e) => {
+              const value = e.target.value;
+              setLocalFilters({
+                ...localFilters,
+                estado: value === "true" ? true : value === "false" ? false : null,
+              });
+            }}
             className="mt-1 block w-full rounded-md border border-gray-300 bg-white px-3 py-2 text-sm text-gray-900 focus:border-blue-500 focus:outline-none"
           >
             <option value="">Todos</option>

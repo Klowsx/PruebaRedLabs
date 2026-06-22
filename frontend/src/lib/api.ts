@@ -1,4 +1,4 @@
-import { getToken } from "./auth";
+import { getToken, removeToken } from "./auth";
 
 const API_BASE_URL = "http://localhost:5214/api";
 
@@ -29,6 +29,13 @@ export async function apiFetch<T>(path: string, options: ApiOptions = {}): Promi
   });
 
   if (!response.ok) {
+    if (response.status === 401) {
+      removeToken();
+      if (typeof window !== "undefined") {
+        window.location.href = "/login";
+      }
+    }
+
     let message = `Error ${response.status}`;
     try {
       const errorBody = await response.json();

@@ -32,7 +32,9 @@ function ProductsPage() {
     try {
       const params = new URLSearchParams();
       if (filters.nombre) params.set("nombre", filters.nombre);
-      if (filters.estado) params.set("estado", filters.estado);
+      if (filters.estado !== undefined && filters.estado !== null) {
+        params.set("estado", filters.estado.toString());
+      }
       if (filters.minPrecio) params.set("minPrecio", filters.minPrecio);
       if (filters.maxPrecio) params.set("maxPrecio", filters.maxPrecio);
       params.set("pageNumber", filters.pageNumber?.toString() || "1");
@@ -118,7 +120,9 @@ function ProductsPage() {
     try {
       const params = new URLSearchParams();
       if (filters.nombre) params.set("nombre", filters.nombre);
-      if (filters.estado) params.set("estado", filters.estado);
+      if (filters.estado !== undefined && filters.estado !== null) {
+        params.set("estado", filters.estado.toString());
+      }
       if (filters.minPrecio) params.set("minPrecio", filters.minPrecio);
       if (filters.maxPrecio) params.set("maxPrecio", filters.maxPrecio);
 
