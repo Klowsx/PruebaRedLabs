@@ -50,6 +50,7 @@ La aplicación quedará disponible en `http://localhost:3000`.
 ### 4. Usar la aplicación
 
 1. Abrir `http://localhost:3000`
+2. Registrarse
 
 ## Nota sobre credenciales y secretos
 
